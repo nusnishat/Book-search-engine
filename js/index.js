@@ -10,7 +10,7 @@ const bookLoad = () => {
 }
 
 const displayBook = (data,books) => {
-    console.log(data);
+
     // display total book number
     const totalBooksShow = document.getElementById('total-books');
     totalBooksShow.textContent = '';
@@ -32,42 +32,73 @@ const displayBook = (data,books) => {
     for(const book of books)
     {   
         const div = document.createElement('div');
-        // console.log(book.title, book.publisher[0], book.first_publish_year);
+
+        const col = document.createElement('div');
+        col.classList.add('col');
+
+        const card = document.createElement('div');
+        card.classList.add('card');
+        // check image
         if(book.cover_i == undefined)
         {
-            div.innerHTML = `
-        <div class="col">
-          <div class="card">
+            card.innerHTML = `
             <img style="height:18rem;" src="no-image.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title fw-bolder mb-1">${book.title}</h5>
-              <p class="text-primary">Author Name: ${book.author_name[0]}</p>
-              <p class="">First Published on : ${book.first_publish_year}</p>
-              <p class="">Publisher : ${book.publisher[0]}</p>
-            </div>
-          </div>
-        </div>
-        `
-        displayField.appendChild(div);
+            `
         }
         else
         {
-            div.innerHTML = `
-        <div class="col">
-          <div class="card">
+            card.innerHTML = `
             <img style="height:18rem;" src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title fw-bolder">${book.title}</h5>
-              <p class="text-primary">Author Name: ${book.author_name[0]}</p>
-              <p class="">First Published on : ${book.first_publish_year}</p>
-              <p class="">Publisher : ${book.publisher[0]}</p>
-            </div>
-          </div>
-        </div>
-        `
-        displayField.appendChild(div);
+            `
         }
-        
+        // card body consists of book-title and book-description
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+        // book title
+        const h5 = document.createElement('h5');
+        h5.classList.add('card-title', 'fw-bolder', 'pb-2')
+        h5.innerText = `${book.title}`;
+        // book description with condition check
+        // author name
+        const p1 =  document.createElement('p');
+        p1.classList.add('text-primary');
+        if(book.author_name != undefined)
+        {
+            p1.innerText = `Author Name: ${book.author_name[0]}`;
+        }
+        else
+        {
+            p1.innerText = `Publisher : undefined`;
+        }
+        // publish date
+        const p2 =  document.createElement('p');
+        if(book.first_publish_year != undefined)
+        {
+            p2.innerText = `First Published on : ${book.first_publish_year}`;
+        }
+        else
+        {
+            p2.innerText = `First Published on : undefined`;
+        }
+        // publisher
+        const p3 =  document.createElement('p');
+        if(book.publisher != undefined)
+        {
+            p3.innerText = `Publisher : ${book.publisher[0]}`;
+        }
+        else
+        {
+            p3.innerText = `Publisher : undefined`;
+        }
+        // append all child
+        cardBody.appendChild(h5);
+        cardBody.appendChild(p1);
+        cardBody.appendChild(p2);
+        cardBody.appendChild(p3);
+        card.appendChild(cardBody);
+        col.appendChild(card);
+        div.appendChild(col);     
+        displayField.appendChild(div);
     }
     
 }
