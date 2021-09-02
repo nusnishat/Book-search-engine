@@ -3,13 +3,14 @@ const bookLoad = () => {
     const searchText = searchField.value;
     fetch(`https://openlibrary.org/search.json?q=${searchText}`)
     .then(response => response.json())
-    .then(data => displayBook(data.docs));
+    .then(data => displayBook(data,data.docs));
 
     // clear searchField
     searchField.value = '';
 }
 
-const displayBook = books => {
+const displayBook = (data,books) => {
+    console.log(data);
     // display total book number
     const totalBooksShow = document.getElementById('total-books');
     totalBooksShow.textContent = '';
