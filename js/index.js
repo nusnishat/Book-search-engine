@@ -3,16 +3,10 @@ const bookLoad = () => {
     const searchText = searchField.value;
     fetch(`https://openlibrary.org/search.json?q=${searchText}`)
     .then(response => response.json())
-    .then(data => displayBook(data.docs))
-    .catch(error => displayerror(error));
+    .then(data => displayBook(data.docs));
 
     // clear searchField
     searchField.value = '';
-}
-
-// display error
-const displayerror = error => {
-    alert('Try with a valid bookname');
 }
 
 const displayBook = books => {
